@@ -1,0 +1,44 @@
+// OMNIA-OS HAL — AOSP Soong Build Configuration
+// iDARIA Foundation — Turin R&D Hub
+//
+// Build: source build/envsetup.sh && lunch aosp_oriole-userdebug
+//        make omnia.attestation@1.0 -j$(nproc)
+
+cc_library_shared {
+    name: "omnia.attestation@1.0",
+    vendor: true,
+
+    srcs: [
+        "omnia_hal.cpp",
+        "omnia_hal_gps.cpp",      // TODO Week 2: real NDK GPS reading
+    ],
+
+    shared_libs: [
+        "libhardware",
+        "liblog",
+        "libutils",
+        "libcutils",
+        "libbase",
+    ],
+
+    static_libs: [
+        // Add crypto lib when TEE signing is implemented
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-DOMNIA_HAL_VERSION=1",
+    ],
+
+    header_libs: [
+        "libhardware_headers",
+    ],
+
+    include_dirs: [
+        "hardware/libhardware/include",
+    ],
+
+    export_include_dirs: ["."],
+}
